@@ -68,10 +68,12 @@ function searchInputListener(e) {
 
 function search() {
 
-  fetch('http://thinksaydo.com/tiyproxy.php?url=' + encodeURIComponent('https://openapi.etsy.com/v2/listings/active?api_key=h9oq2yf3twf4ziejn10b717i&keywords=' + encodeURIComponent(getSearchTerm()) + '&includes=Images,Shop'))
+  fetch('http://thinksaydo.com/tiyproxy.php?url=' + encodeURIComponent('https://openapi.etsy.com/v2/listings/active?api_key=' + apiKey + '&keywords=' + encodeURIComponent(getSearchTerm()) + '&includes=Images,Shop'))
     .then(response => response.json())
     .then(response => createResultsCards(response.results))
 }
+
+const apiKey ='4i2xirk6y1vkors6a8yd8yeh'
 
 function getSearchTerm() {
   return document.querySelector('#search-input').value
