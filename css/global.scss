@@ -67,8 +67,14 @@ header .input-group {
     display: none;
 }
 
-#searchResults .panel-body {
-    padding: 0;
+#searchResults {
+    & img {
+        height: 200px;
+    }
+
+    &.panel-body {
+        padding: 0;
+    }
 }
 
 #searchResults .text-muted, .text-success{

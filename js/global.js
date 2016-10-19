@@ -11,7 +11,8 @@ function createResultCard(item) {
 
   var image = document.createElement('img')
   image.className = 'img-responsive'
-  image.src = item.image
+  image.src = item.Images[0].url_fullxfull
+  // image.src = '../img/chess.jpg'
   image.setAttribute('alt', 'product image')
 
   var wrapper = document.createElement('div')
@@ -23,7 +24,7 @@ function createResultCard(item) {
 
   var seller = document.createElement('p')
   seller.className = 'text-muted'
-  seller.innerHTML = item.seller
+  seller.innerHTML = item.Shop.shop_name
 
   var price = document.createElement('p')
   price.className = 'text-success pull-right'
@@ -43,89 +44,35 @@ function createResultCard(item) {
   document.querySelector('#searchResults.row').appendChild(card)
 }
 
-document.querySelector('#search-button').addEventListener('click', search)
+document.querySelector('#search-button').addEventListener('click', searchButtonListener)
 
-function search(e) {
+document.querySelector('#search-input').addEventListener('keypress', searchInputListener)
+
+function createResultsCards(results) {
   results.forEach(function(result) {
     createResultCard(result)
   })
-
-  // document.querySelector('#searchResults').classList.remove('hidden')
 }
 
-// Call your builder function, one at a time to make 12 search result cards, each with different data (image can be the same at this point if you want)
-// Don't forget you can use a for() loop, or make an array of objects even and use a items.forEach() loop.
-var results = [
-  {
-    image: 'img/chess.jpg',
-    title: 'Vintage Board Game Art Wall Home Decor',
-    seller: 'franz66',
-    price: 15.00
-  },
-  {
-    image: '../img/chess.jpg',
-    title: 'Vintage Board Game Art Wall Home Decor',
-    seller: 'franz66',
-    price: 15.00
-  },
-  {
-    image: '../img/chess.jpg',
-    title: 'Vintage Board Game Art Wall Home Decor',
-    seller: 'franz66',
-    price: 15.00
-  },
-  {
-    image: '../img/chess.jpg',
-    title: 'Vintage Board Game Art Wall Home Decor',
-    seller: 'franz66',
-    price: 15.00
-  },
-  {
-    image: '../img/chess.jpg',
-    title: 'Vintage Board Game Art Wall Home Decor',
-    seller: 'franz66',
-    price: 15.00
-  },
-  {
-    image: '../img/chess.jpg',
-    title: 'Vintage Board Game Art Wall Home Decor',
-    seller: 'franz66',
-    price: 15.00
-  },
-  {
-    image: '../img/chess.jpg',
-    title: 'Vintage Board Game Art Wall Home Decor',
-    seller: 'franz66',
-    price: 15.00
-  },
-  {
-    image: '../img/chess.jpg',
-    title: 'Vintage Board Game Art Wall Home Decor',
-    seller: 'franz66',
-    price: 15.00
-  },
-  {
-    image: '../img/chess.jpg',
-    title: 'Vintage Board Game Art Wall Home Decor',
-    seller: 'franz66',
-    price: 15.00
-  },
-  {
-    image: '../img/chess.jpg',
-    title: 'Vintage Board Game Art Wall Home Decor',
-    seller: 'franz66',
-    price: 15.00
-  },
-  {
-    image: '../img/chess.jpg',
-    title: 'Vintage Board Game Art Wall Home Decor',
-    seller: 'franz66',
-    price: 15.00
-  },
-  {
-    image: '../img/chess.jpg',
-    title: 'Vintage Board Game Art Wall Home Decor',
-    seller: 'franz66',
-    price: 15.00
-  }
-]
+function searchButtonListener(e) {
+  document.querySelector('#searchResults').innerHTML = ''
+  search()
+}
+
+function searchInputListener(e) {
+    if (e.type === 'keypress' && e.key === 'Enter') {
+      document.querySelector('#searchResults').innerHTML = ''
+      search()
+    }
+}
+
+function search() {
+
+  fetch('http://thinksaydo.com/tiyproxy.php?url=' + encodeURIComponent('https://openapi.etsy.com/v2/listings/active?api_key=h9oq2yf3twf4ziejn10b717i&keywords=' + encodeURIComponent(getSearchTerm()) + '&includes=Images,Shop'))
+    .then(response => response.json())
+    .then(response => createResultsCards(response.results))
+}
+
+function getSearchTerm() {
+  return document.querySelector('#search-input').value
+}

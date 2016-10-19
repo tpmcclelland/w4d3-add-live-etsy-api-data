@@ -69,7 +69,11 @@ header .input-group {
   display: none;
 }
 
-#searchResults .panel-body {
+#searchResults img {
+  height: 200px;
+}
+
+#searchResults.panel-body {
   padding: 0;
 }
 
