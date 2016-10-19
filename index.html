@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Etsy</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script type="text/javascript" src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch"></script>
+  <!-- Stylesheets go here. -->
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" /> -->
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="css/global.css" />
+</head>
+<body>
+  <!-- Content goes here. -->
+  <header class="container-fluid">
+    <div class="row header-row">
+      <div class="col-sm-6">
+        <div class="logo pull-left">
+          <img class="img-responsive" src="img/etsylogo.png" alt="logo">
+        </div>
+        <div class="input-group">
+          <input id="search-input" type="text" class="form-control" placeholder="Search for items or shops">
+          <span class="input-group-btn">
+            <button id="search-button" class="btn btn-primary" type="button">Search</button>
+          </span>
+        </div>
+      </div>
+      <nav class="col-sm-6 text-right header-nav">
+        <ul class="list-inline">
+          <li><a href="#">Sell on Etsy</a></li>
+          <li><a href="#">Register</a></li>
+          <li><a class="sign-in" href="#">Sign in</a></li>
+          <li><a class="cart" href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+        </ul>
+      </nav>
+    </div>
+    <nav class="row header-row-nav">
+      <div class="col-sm-12">
+        <ul class="list-inline">
+          <li><a href="#">Clothing & Accessories</a></li>
+          <li><a href="#">Jewelry</a></li>
+          <li><a href="#">Craft Supplies & Tools</a></li>
+          <li><a href="#">Weddings</a></li>
+          <li><a href="#">Entertainment</a></li>
+          <li><a href="#">Home & Living</a></li>
+          <li><a href="#">Kids & Baby</a></li>
+          <li><a href="#">Vintage</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container-fluid main">
+    <div class="row">
+      <div class="col-sm-2">
+        <h5>Show results for</h5>
+        <div class="panel panel-default panel-shadow">
+          <div class="panel-body">
+            <h5><a href="#">All Categories</a></h5>
+            <ul>
+              <li><a href="#">Toys & Games</a></li>
+              <li><a href="#">Art & Collectibles</a></li>
+              <li><a href="#">Craft Supplies & Tools</a></li>
+              <li><a href="#">Home & Living</a></li>
+              <li><a href="#">Books, Movies & Music</a></li>
+              <li><a href="#">Paper & Party Supplies</a></li>
+              <li><a href="#">Accessories</a></li>
+              <li><a href="#">Clothing</a></li>
+              <li><a href="#">Electronics & Accessories</a></li>
+              <li><a href="#">Jewelry</a></li>
+              <li><a href="#">Weddings</a></li>
+              <li><a href="#">Bags & Purses</a></li>
+            </ul>
+          </div>
+        </div>
+        <h5>Refine your search</h5>
+        <div class="panel panel-default panel-shadow">
+          <div class="panel-body">
+            <h5>Shop location</h5>
+            <div class="radio">
+              <label>
+                <input type="radio" name="optionsRadios" id="locationRadios1" value="option1" checked>
+                Anywhere
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="optionsRadios" id="locationRadios2" value="option2"> United States
+              </label>
+            </div>
+            <a href="#">Choose a custom location</a>
+            <hr>
+            <h5>Item type</h5>
+            <div class="radio">
+              <label>
+                <input type="radio" name="typeRadios" id="optionsRadios1" value="option1" checked>
+                All items
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="typeRadios" id="optionsRadios2" value="option2"> Handmade
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="typeRadios" id="optionsRadios3" value="option3"> Vintage
+              </label>
+            </div>
+            <hr>
+            <h5>Price ($)</h5>
+            <input type="text" class="form-control price-input" placeholder="Low"> to
+            <input type="text" class="form-control price-input" placeholder="High">
+            <button class="btn btn-default price-button"><span class="glyphicon glyphicon-chevron-right"></span></button>
+            <!-- <div class="form-inline">
+              <div class="form-group">
+                <label class="sr-only" for="exampleInputName2">Low</label>
+                <input type="text" class="form-control" id="exampleInputName2" placeholder="Low">
+              </div> -->
+              <!-- <p>to</p> -->
+              <!-- <div class="form-group">
+                <label class="sr-only" for="exampleInputName2">Low</label>
+                <input type="text" class="form-control" id="exampleInputName2" placeholder="High">
+              </div>
+            </div> -->
+            <hr>
+            <h5>Filter by color</h5>
+            <ul class="list-inline">
+              <li><div id="red" class="color"></div></li>
+              <li><div id="orange" class="color"></div></li>
+              <li><div id="yellow" class="color"></div></li>
+              <li><div id="green" class="color"></div></li>
+              <li><div id="light-green" class="color"></div></li>
+              <li><div id="purple" class="color"></div></li>
+              <li><div id="black" class="color"></div></li>
+              <li><div id="white" class="color"></div></li>
+            </ul>
+            <hr>
+            <h5>Ordering options</h5>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="">
+              <a href="#">Accepts Etsy gift cards</a>
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="">
+                <a href="#">Customizable</a>
+              </label>
+            </div>
+            <hr>
+            <h5>Ship to</h5>
+            <select class="form-control">
+              <option>United States</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-10">
+        <div class="row">
+          <div class="col-sm-6">
+            <p>Did you mean to shop <a href="#">boardgames</a>?</p>
+            <p><a href="#">All Categories</a>> "board games" (13,558) results</p>
+          </div>
+          <div class="col-sm-6 text-right">
+            <p>Sort by: <a href="#">Relevancy</a><span class="caret"></span></p>
+          </div>
+        </div>
+        <div class="row" id="searchResults">
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <p>Looking for shops? <a href="#">boardgames</a>, <a href="#">BoardGamesFactory</a>, <a href="#">BoardGameShowcase</a>. <a href="#">See more</a>.</p>
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li class="disabled">
+                  <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li><a href="#">7</a></li>
+                <li><a href="#">8</a></li>
+                <li class="disabled"><a href="#">...</a></li>
+                <li><a href="#">250</a></li>
+                <li>
+                  <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-4 text-center">
+        <!-- newsletter subscribe -->
+        <p>Get top trends and fresh editors' picks in your inbox with Etsy Finds.</p>
+        <br>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Enter your email">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="button">Subscribe</button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-sm-2 col-sm-offset-1">
+          <h5>Turn your passion into a business</h5>
+          <button type="button" class="btn btn-primary btn-sm shop-btn">Open a shop</button>
+          <h5>Sell on Etsy</h5>
+          <ul class="list-unstyled">
+            <li><a href="#">Open a shop</a></li>
+            <li><a href="#">Seller Handbook</a></li>
+            <li><a href="#">Etsy credit card reader</a></li>
+            <li><a href="#">Manufacturing</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-2">
+          <h5>Join the community</h5>
+          <ul class="list-unstyled">
+            <li><a href="#">Teams</a></li>
+            <li><a href="#">Forums</a></li>
+            <li><a href="#">Upcoming events</a></li>
+            <li><a href="#">Affiliates</a></li>
+            <li><a href="#">Etsy Local</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-2">
+          <h5>Discover and Shop</h5>
+          <ul class="list-unstyled">
+            <li><a href="#">Gift cards</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Mobile app</a></li>
+            <li><a href="#">Gift registries</a></li>
+            <li><a href="#">Wholesale</a></li>
+            <li><a href="#">Search</a></li>
+            <li><a href="#">Editors' Picks</a></li>
+          </ul>
+      </div>
+        <div class="col-sm-2">
+          <h5>Get to know us</h5>
+          <ul class="list-unstyled">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Policies</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Developers</a></li>
+            <li><a href="#">Investors</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-2">
+          <h5>Follow Etsy</h5>
+          <ul class="list-unstyled">
+            <li><a href="#"><span class="fa fa-facebook padding-right"></span> Facebook</a></li>
+            <li><a href="#"><span class="fa fa-twitter padding-right"></span> Twitter</a></li>
+            <li><a href="#"><span class="fa fa-pinterest padding-right"></span> Pinterest</a></li>
+            <li><a href="#"><span class="fa fa-instagram padding-right"></span> Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row footer-bottom">
+        <div class="col-sm-6">
+          <div class="currency-bar">
+            <div class="flag-img pull-left">
+              <img class="img-responsive img-circle" src="img/flag.jpg" alt="flag">
+            </div>
+            <ul class="currency-links list-inline pull-left">
+              <li class="padding-right">United States</li>
+              <li class="padding-right text-muted">|</li>
+              <li class="padding-right">English (US)</li>
+              <li class="padding-right text-muted">|</li>
+              <li class="padding-right">$ (USD)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <p class="pull-left spacing">&copy; 2016 Etsy, Inc.</p>
+          <ul class="list-inline pull-left spacing">
+            <li><a href="#">Legal</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Internet-based ads</a></li>
+          </ul>
+          <button type="button" class="btn btn-default btn-sm pull-left help-btn">Help</button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- Scripts go here. -->
+  <script src="https://use.fontawesome.com/0de54c62ea.js"></script>
+  <!-- Bootstrap Latest compiled and minified JavaScript -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="js/accounting.min.js"></script>
+  <script type="text/javascript" src="js/global.js"></script>
+</body>
+</html>
