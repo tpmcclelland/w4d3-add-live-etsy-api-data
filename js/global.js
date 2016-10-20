@@ -1,3 +1,4 @@
+
 // Declare your builder function
 function createResultCard(item) {
   var card = document.createElement('div')
@@ -38,6 +39,10 @@ function createResultCard(item) {
   wrapper.appendChild(seller)
   wrapper.appendChild(price)
 
+  card.addEventListener('click', function() {
+    window.open(item.url, '_self')
+  })
+
   // your code here to build up the card
   // keep in mind you'll be nesting tags
 
@@ -48,32 +53,113 @@ document.querySelector('#search-button').addEventListener('click', searchButtonL
 
 document.querySelector('#search-input').addEventListener('keypress', searchInputListener)
 
-function createResultsCards(results) {
+function createResultsCards(response) {
+  var results = response.results
+  // console.log(results)
   results.forEach(function(result) {
     createResultCard(result)
   })
+
+  pagination(response)
+
+}
+
+function pagination(response) {
+  console.log(response.pagination)
+  var currentPage = response.pagination.effective_page
+  var nextPage = response.pagination.next_page
+  var prevPage = currentPage - 1
+  var totalPages = response.count / response.pagination.effective_limit
+
+  var pagesList = document.createElement('ul')
+  pagesList.className = 'pagination'
+  document.querySelector('#pagination-area').appendChild(pagesList)
+
+  var prev = document.createElement('li')
+  pagesList.appendChild(prev)
+  var prevLink = document.createElement('a')
+  prev.appendChild(prevLink)
+  var span = document.createElement('span')
+  span.innerHTML = '&laquo;'
+  prevLink.appendChild(span)
+  if (prevPage === 0) {
+    prev.classList.add('disabled')
+  } else {
+    prevLink.setAttribute('data-page', prevPage)
+    prevLink.addEventListener('click', function(e) {
+      pageNum = e.target.getAttribute('data-page')
+      console.log('prevclick ' + pageNum)
+      search()
+    })
+  }
+
+  for (var i = currentPage; i < currentPage + 10; i++) {
+      var page = document.createElement('li')
+      var pageLink = document.createElement('a')
+      pageLink.setAttribute('href', '#')
+      pageLink.setAttribute('data-page', i)
+      pageLink.innerHTML = i
+      page.appendChild(pageLink)
+      pagesList.appendChild(page)
+
+      page.addEventListener('click', function(e) {
+        pageNum = e.target.getAttribute('data-page')
+        //console.log('click ' + num)
+        search()
+      })
+
+  }
+
+  var next = document.createElement('li')
+  pagesList.appendChild(next)
+  var nextLink = document.createElement('a')
+  next.appendChild(nextLink)
+  var nextSpan = document.createElement('span')
+  nextSpan.innerHTML = '&raquo;'
+  nextLink.appendChild(nextSpan)
+  nextLink.setAttribute('data-page', nextPage)
+  nextLink.addEventListener('click', function(e) {
+    pageNum = e.target.getAttribute('data-page')
+    console.log('nextclick ' + pageNum)
+    search()
+  })
+
 }
 
 function searchButtonListener(e) {
-  document.querySelector('#searchResults').innerHTML = ''
   search()
 }
 
 function searchInputListener(e) {
     if (e.type === 'keypress' && e.key === 'Enter') {
-      document.querySelector('#searchResults').innerHTML = ''
       search()
     }
 }
 
+pageNum = 1
+
 function search() {
+  console.log(pageNum)
+  document.querySelector('#searchResults').innerHTML = ''
+  document.querySelector('#pagination-area').innerHTML = ''
+  const apiKey = '4i2xirk6y1vkors6a8yd8yeh'
+  var proxyServer = 'https://thinksaydo.com/tiyproxy.php?url='
+  var etsyApi = 'https://openapi.etsy.com/v2/listings/active?api_key='
 
-  fetch('http://thinksaydo.com/tiyproxy.php?url=' + encodeURIComponent('https://openapi.etsy.com/v2/listings/active?api_key=' + apiKey + '&keywords=' + encodeURIComponent(getSearchTerm()) + '&includes=Images,Shop'))
+  var parameters = [
+    'keywords=' + encodeURIComponent(getSearchTerm()),
+    'includes=Images,Shop',
+    'page=' + pageNum
+  ]
+
+'http://thinksaydo.com/tiyproxy.php?url=' + encodeURIComponent('https://openapi.etsy.com/v2/listings/active?api_key=h9oq2yf3twf4ziejn10b717i&keywords=' + encodeURIComponent('board games') + '&includes=Images,Shop')
+  var url = proxyServer + encodeURIComponent(etsyApi + apiKey + '&' + parameters.join('&'))
+
+  fetch(url)
     .then(response => response.json())
-    .then(response => createResultsCards(response.results))
+    .then(response => createResultsCards(response))
+    // .then(response => console.log(response))
 }
-
-const apiKey ='4i2xirk6y1vkors6a8yd8yeh'
 
 function getSearchTerm() {
   return document.querySelector('#search-input').value
